@@ -9,3 +9,4 @@ sudo make altinstall
 echo "alias python=/usr/local/bin/python3.9" >> ~/.bashrc
 source ~/.bashrc
 python3.9 -m pip install --upgrade pip
+sudo reboot
