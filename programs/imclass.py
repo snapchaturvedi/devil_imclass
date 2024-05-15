@@ -17,9 +17,9 @@ from PIL import Image
 import gc
  
 # Paths
-program_path = "/home/prithulc/Desktop/devil/programs"
-model_path = "/home/prithulc/Desktop/devil/models"
-save_path = "/home/prithulc/Desktop/devil/save"
+program_path = "/devil_imclass/programs"
+model_path = "/devil_imclass/models"
+save_path = "/devil_imclass/save"
 
 # Camera config
 n_photos = 10
