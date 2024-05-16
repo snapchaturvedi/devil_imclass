@@ -10,3 +10,9 @@ python3 -m pip install tflite-runtime
 
 # To resolve numpy conflict issue with tflite-runtime
 sudo apt-get install libopenblas-dev --yes
+
+# Enable legacy camera
+sudo raspi-config nonint do_legacy 0
+
+# Reboot to enable camera
+sudo reboot
