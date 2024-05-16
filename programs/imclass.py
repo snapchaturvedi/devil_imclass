@@ -17,7 +17,7 @@ from PIL import Image
 import gc
  
 # Paths
-program_path = os.getcwd()
+program_path = os.path.join(os.getcwd(), "devil_imclass", "programs")
 model_path = os.path.join(program_path, "..", "models")
 save_path = os.path.join(program_path, "..", "save")
 
