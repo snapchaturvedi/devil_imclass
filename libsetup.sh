@@ -2,11 +2,11 @@
 sudo apt install python3-pip --yes
 
 # Libraries 
-sudo apt install python3-gpiozero
-sudo apt install python3-RPi.GPIO
-sudo apt install python3-picamera
-sudo apt install python3-numpy
-python3 -m pip install tflite-runtime
+pip3 install gpiozero==1.6.2
+pip3 install RPi.GPIO==0.7.0
+pip3 install picamera==1.13
+pip3 install numpy==1.26.4
+pip3 install tflite-runtime==2.13.0
 
 # To resolve numpy conflict issue with tflite-runtime
 sudo apt-get install libopenblas-dev --yes
