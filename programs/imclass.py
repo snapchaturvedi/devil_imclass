@@ -17,16 +17,16 @@ from PIL import Image
 import gc
  
 # Paths
-program_path = "~/devil_imclass/programs"
-model_path = "~/devil_imclass/models"
-save_path = "~/devil_imclass/save"
+program_path = os.getcwd()
+model_path = os.path.join(program_path, "..", "models")
+save_path = os.path.join(program_path, "..", "save")
 
 # Camera config
 n_photos = 10
 channels = 3
 resolution = [224, 224]
 
-frame_rate = 50
+frame_rate = 60
 rotate = 90
 
 # Save inference times
