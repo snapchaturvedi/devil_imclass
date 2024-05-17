@@ -13,9 +13,7 @@ import RPi.GPIO as GPIO
 import numpy as np
 import tflite_runtime.interpreter as tflite
 import picamera
-from PIL import Image
-import gc
- 
+
 # Paths
 program_path = os.path.join(os.getcwd(), "devil_imclass", "programs")
 model_path = os.path.join(program_path, "..", "models")
@@ -100,7 +98,10 @@ try:
 
 		x = photos.reshape(model_inshape)
 		x = x.astype("float32")
-
+		
+		# Add preprocess here when model def decided
+		# " "
+		
 		# Inference
 		interpreter.set_tensor(in_details[0]["index"], x)
 		interpreter.invoke()
