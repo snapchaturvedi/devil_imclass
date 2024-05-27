@@ -13,6 +13,7 @@ import RPi.GPIO as GPIO
 import numpy as np
 import tflite_runtime.interpreter as tflite
 import picamera
+from PIL import Image
 
 # Paths
 program_path = os.path.join(os.getcwd(), "devil_imclass", "programs")
@@ -25,7 +26,7 @@ channels = 3
 resolution = [224, 224]
 
 frame_rate = 60
-rotate = 90
+rotate = 180
 
 # Save inference times
 times = []
@@ -73,6 +74,7 @@ try:
 	while True:
 		# Detect motion
 		print("Waiting for motion")
+
 		pir.wait_for_motion()
 		print(f"Motion detected")
 
@@ -92,13 +94,14 @@ try:
 			
 			while np.shape(photos)[0] < n_photos*resolution[0]*resolution[1]*channels:
 				camera.capture(click, "rgb")
+				Image.fromarray(click.reshape(resolution+[channels])).save(f"{save_path}/{time.time()}.png") # Save the clicked image to "save" location
 				photos = np.append(photos, click)
 			
 			camera.stop_preview()
 
 		x = photos.reshape(model_inshape)
 		x = x.astype("float32")
-		
+	
 		# Add preprocess here when model def decided
 		# " "
 		
@@ -116,9 +119,9 @@ try:
 		
 		if sum(pred>0.5)>=5:
 			print("Devil detected!")
-			# devil=True
-			
-			while devil==True:
+			devil=True
+			sttm = time.time()
+			while devil==True and time.time()-sttm<=3:
 				print("Carousel start")
 
 				carousel.start(pwr)
@@ -130,9 +133,9 @@ try:
 					if GPIO.input(switch_pin)==GPIO.LOW:
 						count = 2
 						print(count)
-						carousel.stop()
 						devil=False
 			
+			carousel.stop()
 			print("Bait dispensed, going to sleep for 10s")
 			time.sleep(10)
 			
