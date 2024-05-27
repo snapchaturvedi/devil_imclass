@@ -17,5 +17,14 @@ sudo raspi-config nonint do_legacy 0
 # Install lightdm to enable autologin so that program can run upon boot
 sudo apt-get install lightdm
 
+# Boot to console, logging in automatically
+sudo raspi-config nonint do_boot_behaviour B2
+
+# Boot to desktop, logging in automatically
+sudo raspi-config nonint do_boot_behaviour B4
+
+# Add program to .bashrc to run on boot
+sed -i '$a python3 devil_imclass/programs/imclass.py' /home/WI-RM-103/.bashrc
+
 # Reboot to enable camera
 sudo reboot
