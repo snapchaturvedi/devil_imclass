@@ -1,8 +1,8 @@
 #======================================================================================
-# Version 5
-# Date: 10APR2024
+# Version 6
+# Date: 06JUN2024
 # Comments: 
-### Evaluate time taken for inference of all PTQ models
+### Evaluate time taken for inference of all PTQ models (including time taken to click pictures)
 #======================================================================================
 
 # Load libraries
@@ -16,26 +16,20 @@ import picamera
 # Paths
 program_path = "/home/prithulc/Desktop/devil/programs"
 model_path = "/home/prithulc/Desktop/devil/models"
-# ~ model_path = "/home/prithulc/Desktop/devil/killed"
 save_path = "/home/prithulc/Desktop/devil/save"
 
-# Variables
+# Camera variables
 n_photos = 10
 channels = 3
 resolution = [224, 224]
-
 frame_rate = 50
 rotate = 180
 
-model_names = os.listdir(model_path)	
-print(model_names)
+# Get all model names in path
+model_names = os.listdir(model_path)
 
+# Initialise list to save all times
 times = []
-
-# PIR object
-pir = gpiozero.MotionSensor(26)
-burst_num=0
-
 
 for model_name in model_names:
 	print(model_name)
@@ -62,12 +56,7 @@ for model_name in model_names:
 	# This `interpreter` object will be called later to perform inference	
 
 	# Camera tasks
-	# ~ while True:
 	while iteration < 10:
-		# Detect motion
-		# ~ pir.wait_for_motion()
-		print(f"Motion detected {burst_num}")
-
 		# To calculate time taken
 		start = time.time()	
 
@@ -80,14 +69,10 @@ for model_name in model_names:
 			
 			photos = np.array([]) # Initialise empty array to store all the captured photos
 			
-			# ~ camera.start_preview()
-			
 			while np.shape(photos)[0] < n_photos*resolution[0]*resolution[1]*channels:
 				camera.capture(click, "rgb")
 				photos = np.append(photos, click)
-			
-			# ~ camera.stop_preview()
-
+				
 		x = photos.reshape(model_inshape)
 		x = x.astype("float32")
 
@@ -97,16 +82,8 @@ for model_name in model_names:
 		pred = interpreter.get_tensor(out_details[0]["index"])
 		print(pred)
 		
-		# PIR wait for no motion before detecting movement again
-		burst_num += 1
-		# ~ pir.wait_for_no_motion()
-
 		# Time taken
 		times.append(time.time()-start)
-		#time.sleep(30)
-		
-		# Display when sleep over
-		print("Ready to detect motion again\n")
 		
 		iteration += 1
 		print(iteration)
@@ -118,7 +95,7 @@ for model_name in model_names:
 
 # Export times to a csv file
 import csv
-with open("result_times", "w") as f:
+with open("whole_runtime.csv", "w") as f:
 	write = csv.writer(f)
-	write.writerow(times)
-	
+	for i, name in enumerate(model_names):
+		write.writerow([name, times[i*(i+10):(i+1)*10])
