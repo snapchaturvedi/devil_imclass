@@ -15,7 +15,7 @@ sudo apt-get install libopenblas-dev --yes
 sudo raspi-config nonint do_legacy 0
 
 # Install lightdm to enable autologin so that program can run upon boot
-sudo apt-get install lightdm
+sudo apt-get install lightdm --yes
 
 # Boot to console, logging in automatically
 sudo raspi-config nonint do_boot_behaviour B2
