@@ -34,15 +34,15 @@ if not os.path.exists(os.path.join(log_path, "log.csv")):
 		file.write("event, timestamp\n")
 
 # Camera config
-n_photos = 10
-channels = 3
-resolution = [1024, 768]
-model_img_shape = [224, 224]
-rotate = 180
+N_PHOTOS = 10
+CHANNELS = 3
+RESOLUTION = [1024, 768]
+MODEL_IMG_SHAPE = [224, 224]
+ROTATE = 180
 
 # PIR object
-pir = gpiozero.MotionSensor(4)
-sleep_time = 5
+PIR = gpiozero.MotionSensor(4)
+SLEEP_TIME = 5
 
 # Carousel
 GPIO.setmode(GPIO.BCM)
@@ -79,8 +79,8 @@ interpreter.resize_tensor_input(out_details[0]["index"], model_outshape)
 interpreter.allocate_tensors()
 
 # Thresholds for inference
-thresh = 0.5			# To classify devil vs bg
-n_preds = n_photos/2		# No. of images that are predicted devil
+THRESH = 0.5			# To classify devil vs bg
+N_PREDS = N_PHOTOS/2		# No. of images that are predicted devil
 
 # Function to log progression
 def logprog(event):
@@ -92,7 +92,7 @@ def logprog(event):
 def click_pictures():
 
 	# Empty arrays to store individual pictures and all the clicks
-	click = np.empty((resolution[0]*resolution[1]*channels), dtype=np.uint8)
+	click = np.empty((RESOLUTION[0]*RESOLUTION[1]*CHANNELS), dtype=np.uint8)
 	photos = np.array([], dtype=np.uint8)
 	
 	# Start clicking (sensor_mode=4 is HD with full view)
@@ -102,20 +102,20 @@ def click_pictures():
 		time.sleep(2)
 
 		# Take n_photos 
-		while np.shape(photos)[0] < n_photos*resolution[0]*resolution[1]*channels:
+		while np.shape(photos)[0] < N_PHOTOS*RESOLUTION[0]*RESOLUTION[1]*CHANNELS:
 			camera.capture(click, "rgb")
 			photos = np.append(photos, click)
 
 	# Reassemble the pictures clicked		
-	photos2 = photos.reshape([n_photos, resolution[1], resolution[0], channels])
+	photos2 = photos.reshape([n_photos, RESOLUTION[1], RESOLUTION[0], CHANNELS])
 
 	# Resize pictures for the interpreter
 	photos3 = np.array([])
-	for i in range(n_photos):
-		picture = Image.fromarray(photos2[i,:,:,:]).resize(model_img_shape)
+	for i in range(N_PHOTOS):
+		picture = Image.fromarray(photos2[i,:,:,:]).resize(MODEL_IMG_SHAPE)
 		picture.save(os.path.join(save_path, f"{datetime.now()}.png"))
 		photos3 = np.append(photos3, np.array(picture))
-	photos3 = photos3.reshape([n_photos, model_img_shape[0], model_img_shape[0], channels])
+	photos3 = photos3.reshape([N_PHOTOS, MODEL_IMG_SHAPE[0], MODEL_IMG_SHAPE[0], CHANNELS])
 	
 	# Update datatype to float32 for interpreter
 	photos4 = photos3.astype("float32")
@@ -176,7 +176,7 @@ try:
 		pred = predict(photos)
 
 		# Infer on predictions
-		if sum(pred>thresh)>=n_preds:
+		if sum(pred>THRESH)>=N_PREDS:
 			print("Devil detected")
 			dispense_bait()			
 			
