@@ -12,11 +12,13 @@ import gpiozero
 import numpy as np
 import tflite_runtime.interpreter as tflite
 import picamera
+import gc
  
 # Paths
-program_path = "/home/prithulc/Desktop/devil/programs"
-model_path = "/home/prithulc/Desktop/devil/models"
-save_path = "/home/prithulc/Desktop/devil/save"
+program_path = os.path.join(os.getcwd(), "devil_imclass", "programs")
+model_path = os.path.join(program_path, "..", "models")
+save_path = os.path.join(program_path, "..", "save")
+log_path = os.path.join(program_path, "..", "log")
 
 # Camera variables
 n_photos = 10
@@ -98,4 +100,4 @@ import csv
 with open("whole_runtime.csv", "w") as f:
 	write = csv.writer(f)
 	for i, name in enumerate(model_names):
-		write.writerow([name, times[i*(i+10):(i+1)*10])
+		write.writerow([name, times[i*(i+10):(i+1)*10]])
