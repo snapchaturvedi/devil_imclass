@@ -100,4 +100,4 @@ import csv
 with open("whole_runtime.csv", "w") as f:
 	write = csv.writer(f)
 	for i, name in enumerate(model_names):
-		write.writerow([name, times[i*(i+10):(i+1)*10]])
+		write.writerow([name, times[i*10:(i+1)*10]])
