@@ -70,8 +70,8 @@ in_details = interpreter.get_input_details()
 out_details = interpreter.get_output_details()
 
 # In and out data dimensions for interpreter
-model_inshape = [n_photos] + model_img_shape + [channels]
-model_outshape = [n_photos + 1]
+model_inshape = [N_PHOTOS] + MODEL_IMG_SHAPE + [CHANNELS]
+model_outshape = [N_PHOTOS + 1]
 
 # Resize input and output tensors (batch_size axis) based on how many images you'll feed at once (by default it's 1, let's leave it that way for now)
 interpreter.resize_tensor_input(in_details[0]["index"], model_inshape)
@@ -159,14 +159,14 @@ def dispense_bait(devil=True, attempt=0, attempt_thresh=5, time_thresh=4):
 		time.sleep(sleep_time)
 
 		print("Waiting for no motion")
-		pir.wait_for_no_motion()
+		PIR.wait_for_no_motion()
 
 # Run the process
 try:
 	while True:
 		# Detect motion
 		print("Waiting for motion")
-		pir.wait_for_motion()
+		PIR.wait_for_motion()
 		logprog("motion")
 		
 		# Click pictures
