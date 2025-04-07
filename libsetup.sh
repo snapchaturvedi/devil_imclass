@@ -24,4 +24,4 @@ sudo raspi-config nonint do_boot_behaviour B2
 sudo raspi-config nonint do_boot_behaviour B4
 
 # Reboot to enable camera
-sudo reboot
+sudo reboot now
