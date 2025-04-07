@@ -1,7 +1,7 @@
 Files and folders to setup the "devil detector" onto a Raspberry Pi (advised to use a [RPi Model 3B+](https://www.raspberrypi.com/products/raspberry-pi-3-model-b-plus/))
 
 # Setup
-## Use Raspberry Pi OS (Legacy 32-bit) Lite to get Python 3.9 by default
+## Use Raspberry Pi Bullseye (Legacy 32-bit) Lite OS to get Python 3.9 by default
 1. ```sudo apt-get update``` 
 2.	```sudo apt-get upgrade --yes```
 3.	Install git: ```sudo apt install git-all --yes```
