@@ -1,6 +1,6 @@
 #======================================================================================
-# Version 6
-# Date: 06JUN2024
+# Version 7
+# Date: 07APR2024
 # Comments: 
 ### Evaluate time taken for inference of all PTQ models (including time taken to click pictures)
 #======================================================================================
@@ -98,7 +98,7 @@ for model_name in model_names:
 
 # Export times to a csv file
 import csv
-with open("whole_runtime.csv", "w") as f:
+with open("PChaturvedi_model_runtime.csv", "w") as f:
 	write = csv.writer(f)
 	for i, name in enumerate(model_names):
 		write.writerow([name, times[i*10:(i+1)*10]])
