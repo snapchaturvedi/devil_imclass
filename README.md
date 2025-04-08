@@ -2,8 +2,8 @@ Files and folders to setup the "devil detector" onto a Raspberry Pi (advised to 
 
 # Setup
 ## Use Raspberry Pi Bullseye (Legacy 32-bit) Lite OS to get Python 3.9 by default
-1. ```sudo apt-get update``` 
-2.	```sudo apt-get upgrade --yes```
+1. ```sudo apt update``` 
+2.	```sudo apt upgrade --yes```
 3.	Install git: ```sudo apt install git-all --yes```
 4.	Clone this Github repository: ```git clone https://github.com/snapchaturvedi/devil_imclass.git```
 5.	Run shell script: ```bash devil_imclass/libsetup.sh```
