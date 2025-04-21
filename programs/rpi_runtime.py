@@ -14,21 +14,22 @@ import tflite_runtime.interpreter as tflite
 import picamera
 import gc
 
-# Get device name
-f = os.open("/proc/device-tree/model", os.O_RDONLY)
-readBytes = os.read(f, 50)
-os.close(f)
-devname = readBytes.decode("utf-8").strip().replace(".", "_").replace(" ", "")
-print(devname)
-
 # Paths
 program_path = os.path.join(os.getcwd(), "devil_imclass", "programs")
 model_path = os.path.join(program_path, "..", "models")
 save_path = os.path.join(program_path, "..", "save")
 log_path = os.path.join(program_path, "..", "log")
 
-save_file_name = f"PChaturvedi_runtimes_{devname}.csv"
+# Get device name
+f = os.open("/proc/device-tree/model", os.O_RDONLY)
+readBytes = os.read(f, 50)
+os.close(f)
+devname = readBytes.decode().strip("utf-8").replace(".", "_").replace(" ", "").replace("\0", "")
 
+save_file_name = rf"PChaturvedi_runtimes_{devname}.csv"
+print(save_file_name)
+
+# Create save file if does not exist
 if save_file_name not in  os.listdir(save_path):
 	with open(os.path.join(save_path, save_file_name), "w") as f:
 		f.write(f"model, avg_time")
@@ -101,11 +102,11 @@ for model_name in model_names:
 		interpreter.set_tensor(in_details[0]["index"], x)
 		interpreter.invoke()
 		pred = interpreter.get_tensor(out_details[0]["index"])
-		print(pred)
-
+		
 		# Time taken
 		times.append(time.time()-start)
 
+		print(pred)
 		iteration += 1
 		print(iteration)
 
