@@ -1,4 +1,4 @@
-Files and folders to setup the "devil detector" onto a Raspberry Pi (advised to use a [RPi Model 3B+](https://www.raspberrypi.com/products/raspberry-pi-3-model-b-plus/))
+Files and folders to setup the "devil detector" onto a Raspberry Pi (tested on 3B+ and Zero 2W)
 
 # Setup
 ## Use Raspberry Pi Bullseye (Legacy 32-bit) Lite OS to get Python 3.9 by default
@@ -8,7 +8,7 @@ Files and folders to setup the "devil detector" onto a Raspberry Pi (advised to 
 4.	Clone this Github repository: ```git clone https://github.com/snapchaturvedi/devil_imclass.git```
 5.	Run shell script: ```bash devil_imclass/libsetup.sh```
 
-##### If required, downgrade/upgrade Python3 to version 3.9
+##### Downgrade/upgrade to Python3 V3.9 if other OS flavours used:
 1.	Download all packages required: ```sudo apt-get install -y build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev```
 2.	Download python3.9: ```wget https://www.python.org/ftp/python/3.9/Python-3.9.tgz```
 3.	Unzip: ```sudo tar zxf Python-3.9.tgz```
