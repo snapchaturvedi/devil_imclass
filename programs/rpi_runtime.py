@@ -2,7 +2,7 @@
 # Version 6
 # Date: 06JUN2024
 # Comments: 
-### Evaluate time taken for inference of all PTQ models (including time taken to click pictures)
+### Evaluate time taken for inference ONLY of all models in devil_imclass/models folder
 #======================================================================================
 
 # Load libraries
@@ -14,14 +14,24 @@ import tflite_runtime.interpreter as tflite
 import picamera
 import gc
 
+# Get device name
+f = os.open("/proc/device-tree/model", os.O_RDONLY)
+readBytes = os.read(f, 50)
+os.close(f)
+
+devname = readBytes.decode("utf-8").strip().replace(".", "_").replace(" ", "")
+print(devname)
+
 # Paths
 program_path = os.path.join(os.getcwd(), "devil_imclass", "programs")
 model_path = os.path.join(program_path, "..", "models")
 save_path = os.path.join(program_path, "..", "save")
 log_path = os.path.join(program_path, "..", "log")
 
-if "PChaturvedi_runtimes_rpizero2w.csv" not in  os.listdir(save_path):
-	with open(os.path.join(save_path, "PChaturvedi_runtimes_rpizero2w.csv"), "w") as f:
+save_file_name = f"PChaturvedi_runtimes_{devname}.csv"
+
+if save_file_name not in  os.listdir(save_path):
+	with open(os.path.join(save_path, save_file_name), "w") as f:
 		f.write(f"model, avg_time")
 
 # Camera variables
@@ -102,7 +112,7 @@ for model_name in model_names:
 
 	print(sum(times)/len(times))
 
-	with open(os.path.join(save_path, "PChaturvedi_runtimes_rpizero2w.csv"), "a") as f:
+	with open(os.path.join(save_path, save_file_name), "a") as f:
 		f.write(f"{model_name}, {sum(times)/len(times)}")
 
 	# Delete tflite and interpreter to free memory
