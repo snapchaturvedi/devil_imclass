@@ -18,7 +18,6 @@ import gc
 f = os.open("/proc/device-tree/model", os.O_RDONLY)
 readBytes = os.read(f, 50)
 os.close(f)
-
 devname = readBytes.decode("utf-8").strip().replace(".", "_").replace(" ", "")
 print(devname)
 
