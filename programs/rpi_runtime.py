@@ -32,7 +32,7 @@ print(save_file_name)
 # Create save file if does not exist
 if save_file_name not in  os.listdir(save_path):
 	with open(os.path.join(save_path, save_file_name), "w") as f:
-		f.write(f"model, avg_time")
+		f.write(f"model, avg_time\n")
 
 # Camera variables
 N_PHOTOS = 10
@@ -74,7 +74,7 @@ for model_name in model_names:
 	# This `interpreter` object will be called later to perform inference
 
 	# Camera tasks
-	while iteration < 10:
+	while iteration < N_PHOTOS:
 		# Click pictures
 		with picamera.PiCamera() as camera:
 			camera.resolution = RESOLUTION
@@ -88,8 +88,7 @@ for model_name in model_names:
 				camera.capture(click, "rgb")
 				photos = np.append(photos, click)
 
-
-		camera.close()
+			camera.close()
 
 		x = photos.reshape(model_inshape)
 		x = x.astype(DTYPE)
@@ -113,7 +112,7 @@ for model_name in model_names:
 	print(sum(times)/len(times))
 
 	with open(os.path.join(save_path, save_file_name), "a") as f:
-		f.write(f"{model_name}, {sum(times)/len(times)}")
+		f.write(f"{model_name}, {sum(times)/len(times)}\n")
 
 	# Delete tflite and interpreter to free memory
 	del tflite_model
