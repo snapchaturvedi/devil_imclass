@@ -45,6 +45,7 @@ DTYPE = np.float32
 
 # Get all model names in path
 model_names = os.listdir(model_path)
+model_names.sort()
 
 # Initialise list to save all times
 
